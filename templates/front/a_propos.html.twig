@@ -1,0 +1,45 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} {{ parent() }} | à propos {% endblock %}
+
+{% block body %}
+    <hr>
+    <h1>Fonctionnement de Fast Caddie</h1>
+    <p class="font-italic">Fast caddie est un moyen simple de se faire livrer ses courses quotidiennement</p>
+
+    <hr>
+    <h2>Comment utiliser Fast Caddie</h2>
+
+    <ol class="d-flex flex-wrap ml-3">
+        <li>
+            <figure style="width: 350px" class="figure">
+                <img style="width: 250px; height: 200px" src="{{ asset('assets/images/inscrire.jfif') }}" class="figure-img img-fluid rounded" alt="...">
+                <figcaption class="figure-caption">Connectez vous ou Inscrivez vous</figcaption>
+            </figure>
+        </li>
+
+        <li>
+            <figure style="width: 350px" class="figure">
+                <img style="width: 250px; height: 200px" src="{{ asset('assets/images/recherchez.jfif') }}" class="figure-img img-fluid rounded" alt="...">
+                <figcaption class="figure-caption">Recherchez des produits et ajoutez les au panier</figcaption>
+            </figure>
+        </li>
+
+        <li>
+            <figure style="width: 350px" class="figure">
+                <img style="width: 250px; height: 200px" src="{{ asset('assets/images/commander.jpg') }}" class="figure-img img-fluid rounded" alt="...">
+                <figcaption class="figure-caption">Commandez</figcaption>
+            </figure>
+        </li>
+
+        <li>
+            <figure style="width: 350px" class="figure">
+                <img style="width: 250px; height: 200px" src="{{ asset('assets/images/livrer.jpg') }}" class="figure-img img-fluid rounded" alt="...">
+                <figcaption class="figure-caption">Recevez vos courses dans les plus brefs délai</figcaption>
+            </figure>
+        </li>
+    </ol>
+
+
+{% endblock %}
+

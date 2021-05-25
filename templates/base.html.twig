@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="fr-FR">
+<head>
+    <meta charset="UTF-8">
+    <link rel="shortcut icon" href="{{ asset("assets/images/logoFastCaddie.ico") }}">
+    <meta name="robots" content="index, follow"/>
+    <meta name="description" content="Faites-vous livrer vos plats préférés directement chez vous avec Fast Caddie. Découvrez notre sélection de produits et passez commande sans attendre !">
+    <meta name="description" content="livraison">
+    <meta name="description" content="livrer">
+    <meta name="description" content="paiement">
+    <meta name="description" content="distance">
+    <meta name="description" content="produits">
+    <meta name="description" content="economies">
+    <meta name="description" content="alimentation">
+    <meta name="description" content="promotions">
+    <meta name="description" content="fast caddie">
+    <meta name="description" content="panier">
+    <meta name="description" content="Ile-De-France">
+    <meta name="description" content="Paris">
+    <title>{% block title %}Fast Caddie{% endblock %}</title>
+
+
+    {% block stylesheets %}
+        <link rel="stylesheet" href="{{ asset('assets/bootstrap-4.0.0/dist/css/bootstrap.min.css') }}">
+        <link rel="icon" type="image/png" href="{{ asset('assets/images/logoFastCaddie.ico') }}" />
+
+        <link rel="stylesheet" href="{{ asset('assets/bootstrap-4.0.0/dist/css/bootstrap.min.css') }}">
+
+
+{#        <link rel="stylesheet" href="{{ asset('assets/bootstrap-4.0.0-alpha.6-dist/css/bootstrap.css') }}">#}
+
+        {#        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">#}
+        {#        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">#}
+
+        <link rel="stylesheet" href="{{ asset('assets/bootstrap/css/bootstrap.min.css') }}">
+        <link rel="stylesheet" href="{{ asset('assets/CSS/style.css') }}">
+        <link rel="stylesheet" href="{{ asset('assets/fontawesome-free-5.15.3-web/css/all.css') }}">
+    {% endblock %}
+</head>
+
+<body>
+    <header>
+
+    <! -- nav --!>
+
+
+        <nav class="navbar navbar-expand-lg navbar-dark navcolor" id="divH">
+
+            <a href="{{ path('home') }}"> <img id="logo_fastcaddie" src="{{ asset("assets/images/logoFastCaddie.png") }}" alt="logo_fastcaddie"> </a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                    aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse ml-5" id="navbarSupportedContent">
+                <ul class=" menu navbar-nav mr-auto">
+
+                    <li class="nav-item active mr-4">
+                        <a class="nav-link text-white" href="{{ path('home') }}">Accueil</a>
+                    </li>
+
+                    <li class="nav-item active mr-4">
+                        <a class="nav-link text-white" href="{{ path('show_articles')}}">Nos produits</a>
+                    </li>
+
+                    <li class="nav-item active mr-4">
+                        <a class="nav-link text-white" href="{{ path('send_form')}}">Nous contacter</a>
+                    </li>
+
+                    <li>
+                        <div class="loupe">
+                            <form class="form-inline my-2 my-md-0 text-center"  method="get" action="{{ path('searchrender') }}">
+                                <input id="searchbar" aria-label="searchbar" class="form-control mr-sm-2" type="text" placeholder="Soda, Eau, Bananes..." name="search">
+                                <button id="search-btn" class="btn my-2 my-sm-0" type="submit">
+                                    <i class="fas fa-search"></i></button>
+                            </form>
+                        </div>
+                    </li>
+                </ul>
+
+                {% if app.user %}
+                    <a class="nav-link text-white" href="{{ path('panier') }}"><i class="fas fa-shopping-cart text-white"></i>  Panier</a>
+
+                    <div class="nav-item dropdown my-2 my-lg-0 mr-5">
+                        <a class="nav-link dropdown-toggle text-white" href="" id="navbarDropdown" role="button"
+                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            {% if not app.user.username %}
+                                {{ app.user.email }}
+                                {% else %}
+                                    <i class="fas fa-user"></i>  {{ app.user.username }}
+                            {% endif %}
+                        </a>
+
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" href="{{ path('profil') }}">Profil</a>
+
+                            {% if is_granted('ROLE_ADMIN') %}
+                                <a class="dropdown-item" href="{{ path('backoffice') }}">Back-office</a>
+                            {% endif %}
+
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="{{ path('logout') }}">Déconnexion</a>
+                        </div>
+                    </div>
+                {% else %}
+                    <div class="button_log">
+                        <button class="btn btn-outline-success btn-sm "><a class="nav-link text-white " href="{{path('login')}}">Connexion</a></button>
+                        <button class="btn btn-outline-primary btn-sm "><a class="nav-link text-white" href="{{ path('inscription') }}">Inscription</a></button>
+                    </div>
+                {% endif %}
+            </div>
+        </nav>
+
+
+        <! -- nav --!>
+
+</header>
+
+{% block body %}
+
+{% endblock %}
+
+
+<div>
+    <!-- Footer -->
+
+    <footer class="bg-footer text-center text-white">
+        <!-- Grid container -->
+        <div class="container p-4">
+            <!-- Section: Réseaux sociaux -->
+            <section class="mb-4">
+                <!-- Facebook -->
+                <a class="btn btn-outline-light btn-floating m-1" role="button">
+                    <i class="fab fa-facebook-f"></i>
+                </a>
+
+                <!-- Twitter -->
+                <a class="btn btn-outline-light btn-floating m-1" role="button">
+                    <i class="fab fa-twitter"></i>
+                </a>
+
+                <!-- Instagram -->
+                <a class="btn btn-outline-light btn-floating m-1" role="button">
+                    <i class="fab fa-instagram"></i>
+                </a>
+            </section>
+            <!-- Section: Réseaux sociaux -->
+
+            <!-- Section: Text -->
+            <section class="mb-4">
+                <p>
+                    Fast caddie est une entreprise qui vous permet faire vos courses depuis chez vous,
+                    elle compte pas moins de 0 employés prêt à tout pour vous livrer dans les plus bref délais
+                    vos courses de la semaine ou de la journée.
+                </p>
+            </section>
+            <!-- Section: Text -->
+            <hr>
+            <!-- Section: Liens -->
+            <section class="">
+                <!--Grid row-->
+                <div class="row info_footer">
+                    <!--Grid column-->
+                    <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
+                        <h5 class="text-uppercase">A propos de Fast Caddie</h5>
+
+                        <ul class="list-unstyled mb-0">
+
+                            <li>
+                                <a href="{{ path('a_propos') }}" class="text-white">À propos de Fast Caddie</a>
+                            </li>
+
+                            <li>
+                                <a href="{{ path('all_magasins')}}" class="text-white">Afficher tous les magasins</a>
+                            </li>
+
+                            <li>
+                                <a href="{{ path('show_articles') }}" class="text-white">Tous nos produits</a>
+                            </li>
+
+                        </ul>
+                    </div>
+                    <!--Grid column-->
+
+                    <!--Grid column-->
+                    <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
+                        <h5 class="text-uppercase">Obtenir de l'aide</h5>
+
+                        <ul class="list-unstyled mb-0">
+                            <li>
+                                <a href="{{ path('tarifs') }}" class="text-white">*Tarifs</a>
+                            </li>
+                            <li>
+                                <a href="{{ path('send_form') }}" class="text-white">Nous contacter</a>
+                            </li>
+                            <li>
+                                <a href="{{ path('promotions') }}" class="text-white">Economisez</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <!--Grid row-->
+            </section>
+            <!-- Section: Liens -->
+        </div>
+        <!-- Grid container -->
+
+        <!-- Copyright -->
+        <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
+            © 2021 Fast Caddie Inc. :
+            <a class="text-white" href="{{ path('politique-de-confidentialite') }}">Politique de confidentialité</a>
+        </div>
+        <!-- Copyright -->
+    </footer>
+    <!-- Footer -->
+
+</div>
+
+
+{% block javascripts %}
+    <script type="text/javascript" src="{{ asset('assets/front.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('assets/jquery.lazy.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('assets/tether.min.js') }}"></script>
+
+    <script type="text/javascript" src="{{ asset('assets/bootstrap/js/bootstrap.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('assets/jquery-3.6.0.js') }}"></script>
+
+    <script type="text/javascript" src="{{ asset('assets/bootstrap-4.0.0/dist/js/bootstrap.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('assets/bootstrap-4.0.0/js/tests/vendor/jquery-1.9.1.min.js') }}"></script>
+{% endblock %}
+
+</body>
+</html>

@@ -1,0 +1,222 @@
+body {
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+}
+
+/* logo */
+
+#logo_fastcaddie {
+    height: 100px;
+}
+
+/* nav */
+.navbar{
+    display: flex;
+    text-align: justify;
+    justify-content: center;
+    align-items: center;
+    background-color: black;
+}
+
+/* slogan */
+.slogan {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+}
+
+/*  SLIDER */
+#carouselExemple {
+    width: 50%;
+    margin: 0 auto;
+    margin-top: 0px;
+}
+
+.carousel-item img {
+    width: 100%;
+    height: auto;
+}
+
+.carousel-item {
+    height: 420px;
+}
+
+.image-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+/* ETAPES */
+.img-etape {
+    width: 80vw;
+    height: auto;
+}
+
+/* FOOTER */
+.footer_block {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    text-align: center;
+    background-color: black;
+}
+.bg-footer {
+    background-color: black;
+}
+.info_footer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.text-img slider {
+color: white;
+}
+
+/** CONNEXION **/
+
+/* Connexion & Inscription */
+.box-login {
+    transform: translate(-50%, -50%);
+    background-color: #0c4128;
+}
+.login_form {
+    height: 800px;
+    width: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-image: url("https://image.freepik.com/photos-gratuite/boites-colis-papier-logo-panier-achat-dans-chariot-clavier-ordinateur-portable_9635-3215.jpg");
+    background-size: cover;
+}
+
+.box_login {
+   /** background: -webkit-linear-gradient(white, lightsalmon); **/
+    background: -webkit-linear-gradient(-25deg, lightblue 50%, white 50%);
+    border-radius: 30px;
+}
+/**  INSCRIPTION **/
+.register_form {
+    height: 1300px;
+    width: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-image: url("https://image.freepik.com/photos-gratuite/boites-colis-papier-logo-panier-achat-dans-chariot-clavier-ordinateur-portable_9635-3215.jpg");
+    background-size: cover;
+}
+.box_register {
+    background: -webkit-linear-gradient(white, lightblue);
+    width: 40%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 30px;
+}
+/** BOUTONS DU SITE **/
+.btn {
+    border-radius: 20px;
+}
+.w-25 {
+    width: 100% !important;
+}
+/** CONTACT **/
+.contact_title {
+    display: flex;
+    justify-content: center;
+    background: linear-gradient(to right, #2e86de, #222f3e);
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+}
+
+#contact-form {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.box_contact {
+    width: 900px;
+}
+.profil_h1 {
+    background: linear-gradient(to right, darkblue, lightblue, darkblue);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+
+}
+
+/** PAGE DE PROFIL **/
+.profil_box_title {
+    background-color: #FFFFFF;
+
+}
+.profil_title {
+    background: linear-gradient(to right, deepskyblue, darkblue, deepskyblue);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+.profil_page {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: -webkit-linear-gradient(-25deg, white 65%, cornflowerblue 35%);
+}
+
+.box_historique {
+    background-color: white;
+}
+/* ------------ Profil ----------- */
+.sProfil {
+    font-weight: bold;
+}
+
+/* --------------- MESSAGE ADDFLASH ---------------- */
+.messageSuccess {
+    width: auto;
+    height: 35px;
+
+    background-color: darkgreen;
+    color: white;
+
+    padding: 7px;
+    border-radius: 10px;
+    text-align: center;
+    align-items: center;
+
+    position: fixed;
+    bottom: 100px;
+    right: 10px;
+    z-index: 2;
+}
+
+.messageEchec {
+    width: auto;
+    height: 35px;
+
+    background-color: darkred;
+    color: black;
+
+    padding: 7px;
+    border-radius: 10px;
+    text-align: center;
+    align-items: center;
+
+    position: fixed;
+    bottom: 100px;
+    right: 10px;
+    z-index: 2;
+}
+
+
+.conteneur-secondaire {
+    margin-top: 15px;
+    padding: 10px 10px;
+    border: 1px solid lightgray;
+    border-radius: 10px;
+}

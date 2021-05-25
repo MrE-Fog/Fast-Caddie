@@ -1,0 +1,136 @@
+{% extends 'base.html.twig' %}
+
+
+{% block title %} {{ parent() }} | Produits {% endblock %}
+
+{% block body %}
+
+    {% for message in app.flashes('success') %}
+        <div style="margin: 10px auto; padding: 20px; width: 50%; border-radius: 20%">
+            <div class="bg-success text-center rounded m-2 p-3">
+                {{ message }}
+            </div>
+        </div>
+
+    {% endfor %}
+
+    {% for message in app.flashes('echec') %}
+        <div style="margin: 10px auto; padding: 20px; width: 50%; border-radius: 20%">
+            <div class="bg-danger text-center rounded m-2 p-3">
+                {{ message }}
+            </div>
+        </div>
+    {% endfor %}
+
+
+
+    {# Trie des articles avec la catégorie, le type et le prix #}
+    <div class=" conteneur-secondaire container ">
+        <h2>Recherche:</h2>
+        <form action="{{ path('show_articles') }}"  method="get">
+            <label for="categorie">Catégorie</label>
+            <select aria-label="categorie" name="categorie" class="types" >
+                <option value=""></option>
+                {% for categorie in categories %}
+                    <option value="{{ categorie.id }}">{{ categorie.nom }}</option>
+                {% endfor %}
+            </select>
+
+            <div id="divType" class="mt-2" style="display: none">
+                <label for="type">Unité</label>
+                <select aria-label="type" name="type" >
+                    <option value=""></option>
+                    <option value="kg">kg</option>
+                    <option value="100g">100g</option>
+                    <option value="500g">500g</option>
+                </select>
+            </div>
+
+            <label for="prixInf">Prix Inférieur à</label>
+            <select aria-label="prixInf" name="prixInf">
+                <option value=""></option>
+                <option value="5">5€</option>
+                <option value="10">10€</option>
+                <option value="15">15€</option>
+            </select>
+
+            <button class="btn-back" type="submit">Trier</button>
+        </form>
+    </div>
+
+
+    {% if articlesChoisi is not null and introuvables == false %}
+
+        <div class="conteneur-secondaire d-flex flex-wrap">
+
+        {% for article in articlesChoisi %}
+            <div class="card" style="width: 18rem;">
+                <img class="card-img-top" src="{{ asset('images/imagesUpload/') }}{{ article.image }}" alt="{{ article.nom }}">
+                <div class="card-body">
+                    <h5 class="card-title">{{ article.nom }}</h5>
+                    <p class="card-text">{{ article.description }}</p>
+                </div>
+                <ul class="list-group list-group-flush">
+                    {% if article.type is not null %}
+                    <li class="list-group-item"> PRIX : {{ article.prix}} €/ {{ article.type }}</li>
+        {% else %}
+            <li class="list-group-item"> PRIX : {{ article.prix}} €</li>
+                    {% endif %}
+                </ul>
+                <div class="card-body">
+                    <a href="{{ path('showarticle', {'id': article.id}) }}" class="card-link"><button class=" btn-primary">Voir</button></a>
+                    {% if app.user %}
+                        <a href="{{ path('ajout_panier', {'id': article.id,'param':"show_articles"}) }}" class="card-link"><button class=" btn-primary">Ajouter au panier</button></a>
+                    {% endif %}
+                </div>
+            </div>
+
+        {% endfor %}
+    </div>
+    {# SI le trie n'as rien donné #}
+    {% elseif introuvables == true %}
+    <p class="text-danger">Aucun article n'as été trouvé</p>
+
+    {% elseif articlesChoisi is null and introuvables == false %}
+
+
+        {% for categorie in categories %}
+
+            <h1 id="title_show_articles" style="margin-top: 5rem;margin-bottom: 3rem; text-align:center">{{ categorie.nom }}</h1>
+
+            <div class="row justify-content-around">
+                {% for article in articles %}
+                    {% if article.categorie.nom == categorie.nom %}
+
+
+                    <div class="card" style="width: 18rem;">
+                    <img class="card-img-top" src="{{ asset('images/imagesUpload/') }}{{ article.image }}" alt="{{ article.nom }}">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ article.nom }}</h5>
+                        <p class="card-text">{{ article.description }}</p>
+                    </div>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item"> PRIX : {{ article.prix}} €</li>
+                    </ul>
+                    <div class="card-body">
+                    <a href="{{ path('showarticle', {'id': article.id}) }}" class="card-link"><button class=" btn-primary">Voir</button></a>
+                    {% if app.user %}
+                        <a href="{{ path('ajout_panier', {'id': article.id,'param':"show_articles"}) }}" class="card-link"><button class=" btn-primary">Ajouter au panier</button></a>
+                        {% endif %}
+                        </div>
+                        </div>
+
+
+                    {% endif %}
+                {% endfor %}
+           </div>
+
+        {% endfor %}
+
+
+
+    {% endif %}
+
+
+{% endblock %}
+

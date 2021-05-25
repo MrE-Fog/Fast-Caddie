@@ -1,0 +1,88 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} {{ parent() }} | Profil{% endblock %}
+
+{% block body %}
+    {% for message in app.flashes('success') %}
+        <div class="messageSuccess quitter">
+            {{ message }}
+        </div>
+    {% endfor %}
+
+    {% for message in app.flashes('echec') %}
+        <div class="messageEchec quitter">
+            {{ message }}
+        </div>
+    {% endfor %}
+
+    <div class="conteneur-global profil_page">
+        <div class="conteneur-secondaire profil_box_title border-1 border-primary">
+            {% if is_granted("ROLE_ADMIN") %}
+                <h1 class="profil_title border-1 border-primary">Profil administrateur</h1>
+            {% else %}
+                <h1>Profil utilisateur</h1>
+            {% endif %}
+        </div>
+
+        <div class="card mt-5 border-1 border-primary">
+            <div class="card-body">
+                <h2 class="text-secondary">Données utilisateur</h2>
+                <hr>
+                <p><span class="sProfil">Pseudo: </span>{{ app.user.username }}</p>
+                <p><span class="sProfil">Nom: </span>{{ app.user.nom }}</p>
+                <p><span class="sProfil">Prenom: </span>{{ app.user.prenom }}</p>
+                <p><span class="sProfil">Email: </span>{{ app.user.email }}</p>
+                <p><span class="sProfil">Adresse: </span>{{ app.user.adresse }}</p>
+                <p><span class="sProfil">Code Postal: </span>{{ app.user.cp }}</p>
+
+                <div class="text-center">
+                    <a href="{{ path('modifprofil', {'id':app.user.id}) }}" class="btn btn-primary">Modifier</a>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="conteneur-secondaire box_historique mb-3 border-1 border-primary">
+            {% if app.user.commandes is not null %}
+
+                <h2 class="text-center text-secondary"><span>Historique de commandes </span></h2>
+                <hr>
+                <table class="table table-striped">
+                    <tr>
+                        <th>Produits</th>
+                        <th>Date de la commande</th>
+                        <th>Etat</th>
+                        <th>Livreur</th>
+                        <th>Total TTC</th>
+                    </tr>
+
+                    {% for commande in app.user.commandes %}
+                    <tr>
+                            <td>
+                                {% for produit in commande.achats %}
+                                    {{ produit.article.nom }} - {{ produit.article.prix }} € x {{ produit.quantite }}
+                                {% endfor %}
+                            </td>
+                            <td>{{ commande.date.format("d/m/Y H:i")  }}</td>
+                            <td>{{ commande.etat }}</td>
+
+                            {% if commande.livreur is not null %}
+                                <td>{{ commande.livreur }}</td>
+                            {% else %}
+                                <td>Livreur non attribué</td>
+                            {% endif %}
+
+                            <td>{{ commande.total }} €</td>
+                    </tr>
+                        {% endfor %}
+
+                </table>
+
+            {% else %}
+                <p><span>Vous n'avez pas encore passer de commande</span></p>
+            {% endif %}
+        </div>
+    </div>
+
+
+{% endblock %}

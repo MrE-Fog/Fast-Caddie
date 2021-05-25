@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} {{ parent() }} | Magasins{% endblock %}
+
+{% block body %}
+    <hr>
+    <h1 class="text-center">Nos magasins</h1>
+
+    <h4>Pour l'instant nous avons un seul magasin se situant à Mantes la Jolie</h4>
+
+    <div class="d-flex align-items-center m-3">
+        <img style="width: 300px; height: 300px; float: left; border-radius: 50%" src="{{ asset('assets/images/map.png') }}">
+        <p class="ml-2">Ce magasin livre dans un rayon de 40km autour de mantes la jolie</p>
+    </div>
+
+{% endblock %}
+

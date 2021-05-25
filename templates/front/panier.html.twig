@@ -1,0 +1,66 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} {{ parent() }} | Panier{% endblock %}
+
+{% block body %}
+    {% for message in app.flashes('success') %}
+        <div class="messageSuccess quitter">
+            {{ message }}
+        </div>
+    {% endfor %}
+
+    {% for message in app.flashes('echec') %}
+        <div class="messageEchec quitter">
+            {{ message }}
+        </div>
+    {% endfor %}
+
+    <div class="container">
+        <h1>Voici votre Panier</h1>
+        <table class="table table-bordered">
+            <thead class="table-success text-center">
+                <tr>
+                    <th >Nom</th>
+                    <th >Photo</th>
+                    <th >Prix</th>
+                    <th >Quantité</th>
+                    <th >Prix Total</th>
+                    <th >Retirer</th>
+                    <th >Ajouter </th>
+                    <th >Annuler</th>
+                </tr>
+            </thead>
+
+            <tbody class="text-center">
+            {% for item in items %}
+                <tr>
+                    <td>{{ item.article.nom }}</td>
+                    <td><img height="40" width="40" src="{{ asset('images/imagesUpload/') }}{{ item.article.image }}" alt="{{ item.article.nom }}"></td>
+                    <td>{{ item.article.prix }}</td>
+                    <td>{{ item.quantite }}</td>
+                    <td>{{ item.article.prix * item.quantite }}</td>
+                    <td>
+                        <a href="{{ path('retrait_panier', {'id': item.article.id}) }}"><button class="btn btn-danger text-white">-</button></a></td>
+                    <td>
+                        <a href="{{ path('ajout_panier', {'id': item.article.id,'param':"panier"}) }}"><button class="btn btn-success text-white">+</button></a></td>
+                    <td>
+                        <a href="{{ path('annule_panier', {'id': item.article.id}) }}"><button class="btn btn-outline-danger btn-rounded" >Annuler</button></a></td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+        <div class="card w-50" style="margin-bottom: 170px">
+            <div class="card-body">
+                <h5 class="card-title"><h5 style="color: darkgreen">Total de la commande : {{ total }} €</h5></h5>
+
+                <a href="{{ path('commande') }}">
+                    <button class="btn btn-success">Valider votre panier</button>
+                </a>
+            </div>
+        </div>
+
+    </div>
+
+
+{% endblock %}

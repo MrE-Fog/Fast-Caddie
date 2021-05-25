@@ -1,0 +1,62 @@
+{% extends 'backoffice.html.twig' %}
+
+{% block title %} {{ parent() }} | Utilisateur{% endblock %}
+
+{% block body %}
+    {% for message in app.flashes('success') %}
+        <div class="messageSuccess quitter">
+            {{ message }}
+        </div>
+    {% endfor %}
+
+    {% for message in app.flashes('echec') %}
+        <div class="messageEchec quitter">
+            {{ message }}
+        </div>
+    {% endfor %}
+
+    <div class="conteneur-global">
+        <div class="conteneur-secondaire text-center">
+            <h1>Liste des utilisateurs</h1>
+        </div>
+
+        <div class="conteneur-secondaire">
+            <table class="table border mt-3">
+                <thead class="thead-dark text-center">
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Nom</th>
+                    <th scope="col">Prenom</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Adresse</th>
+                    <th scope="col">Code Postal</th>
+                    <th scope="col">Google</th>
+                    <th scope="col">Commande(s)</th>
+                    <th scope="col">  </th>
+                </tr>
+                </thead>
+                <tbody class="text-center">
+                {% for utilisateur in utilisateurs %}
+                    <tr id="{{ utilisateur.id }}">
+
+                        <td>{{ utilisateur.id }}</td>
+                        <td>{{ utilisateur.nom }}</td>
+                        <td>{{ utilisateur.prenom }}</td>
+                        <td>{{ utilisateur.email }}</td>
+                        <td>{{ utilisateur.adresse }}</td>
+                        <td>{{ utilisateur.cp }}</td>
+                        {% if utilisateur.googleId is not null %}
+                            <td>Compte google</td>
+                        {% else %}
+                            <td></td>
+                        {% endif %}
+                        <td><a href="{{ path('commandes_user', {'id':utilisateur.id}) }}"><i class="fas fa-box-open"></i></a></td>
+                        <td><a href="{{ path('delete_user', {'id':utilisateur.id}) }}"> <i class="fas fa-trash text-danger"></i></a></td>
+
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}

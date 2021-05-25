@@ -1,0 +1,47 @@
+{% extends 'backoffice.html.twig' %}
+
+
+{% block title %} {{ parent() }} | Produits {% endblock %}
+
+{% block body %}
+
+    {% for message in app.flashes('success') %}
+        <div class="messageSuccess quitter">
+            {{ message }}
+        </div>
+    {% endfor %}
+
+    {% for message in app.flashes('echec') %}
+        <div class="messageEchec quitter">
+            {{ message }}
+        </div>
+    {% endfor %}
+
+    <div class="conteneur-global">
+        <h1>Détail de l'article N° {{ article.id }}</h1>
+        <div class=" card text-center w-50 mx-auto m-3">
+
+            <div class="card-img-top mt-3">
+                <img class="lazy" src="{{ asset('assets/images/loader.gif') }}" data-src="{{ asset('images/imagesUpload/') }}{{ article.image }}" height="200" width="200" alt="{{ article.nom }}" >
+                <noscript>
+                    <img src="{{ asset('images/imagesUpload/') }}{{ article.image }}" height="200" width="200" alt="{{ article.nom }}" >
+                </noscript>
+            </div>
+            <div class="card-body">
+                <div><h4 class="card-title">{{ article.nom }}</h4></div>
+                <div>  {{ article.prix}} €</div>
+                <div> {{ article.description }}</div>
+            </div>
+            <div class="card-footer d-flex justify-content-around align-items-center">
+                <p>Stock: {{ article.stock }}</p>
+                <a class="btn-modif-back" href="{{ path('article_modif' ,{'id':article.id}) }}"><i class="fas fa-edit text-primary"></i></a>
+                <a class="btn-delete-back" href="{{ path('delete_article',{'id':article.id}) }}"><i class="fas fa-trash text-danger"></i></a>
+            </div>
+
+        </div>
+    </div>
+
+
+
+{% endblock %}
+

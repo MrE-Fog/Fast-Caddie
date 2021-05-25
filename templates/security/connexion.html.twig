@@ -1,0 +1,54 @@
+{% extends 'base.html.twig' %}
+{% block title %} {{ parent() }} | Connexion{% endblock %}
+
+{% block body %}
+
+    {% for message in app.flashes('success') %}
+        <div class="messageSuccess quitter">
+            {{ message }}
+        </div>
+    {% endfor %}
+
+    {% for message in app.flashes('echec') %}
+        <div class="messageEchec quitter">
+            {{ message }}
+        </div>
+    {% endfor %}
+
+    <!-- login -->
+
+    <div class="container-fluid login_form">
+
+        <form action="{{ path('login') }}" method="post" class="bg-light box_login border border-dark col-md-3 p-4 mt-4 mx-auto text-center">
+            <div class="text-center">
+
+                <a href="{{ path('home') }}"> <img alt="Logo de fast caddie" id="logo_fastcaddie" src="{{ asset("assets/images/logoFastCaddie.png") }}"> </a>
+                <hr>
+                <h1>Connexion</h1>
+
+            </div>
+
+            <label for="_username">E-mail</label>
+            <div class="form-group">
+                <span><i class="fa fa-envelope-open"></i></span>
+                <input type="email" placeholder="email@xyz.fr" id="_username" name="_username" value="{{ lastuser }}">
+            </div>
+
+            <label for="_password">Mot de passe</label>
+            <div class="form-group">
+                <span><i class="fa fa-key"></i></span>
+                <input type="password" placeholder="Mot de passe" id="_password" name="_password" >
+            </div>
+
+            <button class="btn btn-primary" type="submit">Se connecter</button>
+            <hr>
+           <div>
+               <a class="btn btn-danger" href="{{ path('google_connect') }}">
+                   <i class="fab fa-google"></i> Google
+               </a>
+           </div>
+        </form>
+
+    </div>
+
+{% endblock %}

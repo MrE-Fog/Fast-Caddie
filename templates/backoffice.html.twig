@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Bienvenue sur le Backoffice de votre site !{% endblock %}</title>
+
+    {% block stylesheets %}
+        <link rel="icon" type="image/png" href="{{ asset('assets/images/logoFastCaddie.ico') }}" />
+
+        <link rel="stylesheet" href="{{ asset('assets/bootstrap/css/bootstrap.min.css') }}">
+        <link rel="stylesheet" href="{{ asset('assets/CSS/backoffice.css') }}">
+        <link rel="stylesheet" href="{{ asset('assets/fontawesome-free-5.15.3-web/css/all.css') }}">
+    {% endblock %}
+</head>
+<body>
+
+    <header>
+        <a href="{{ path('home') }}">
+            <img style="width: 100px" src="{{ asset('assets/images/logoFastCaddie.png') }}" alt="LOGO">
+        </a>
+
+        <a class="lien-accueil" href="{{ path('backoffice') }}">Accueil Backoffice</a>
+
+        <p>Connecté en tant que {{ app.user.nom }}</p>
+
+        <nav class="navBackOffice">
+
+            <ul class="div-list">
+                <li>
+                    <div class="dropdown">
+                        <button class="btn-modif-back dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                            Employés
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-couleur" aria-labelledby="dropdownMenuButton1">
+                            <li><a class="dropdown-item dd-item" href="{{ path('gestion_employe') }}">Gestion des employés</a></li>
+                            <li><a class="dropdown-item dd-item" href="{{ path('add_employe') }}">Ajouter un employé</a></li>
+                        </ul>
+                    </div>
+                </li>
+
+                <li><a class="btn btn-modif-back" href="{{ path('gestion_users') }}">Utilisateurs</a></li>
+
+                <li>
+                    <div class="dropdown">
+                        <button class="btn-modif-back dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                            Articles
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-couleur" aria-labelledby="dropdownMenuButton1">
+                            <li><a class="dropdown-item dd-item" href="{{ path('gestion_articles') }}">Gestion des articles</a></li>
+                            <li><a class="dropdown-item dd-item" href="{{ path('add_article') }}">Ajouter un article</a></li>
+                        </ul>
+                    </div>
+                </li>
+
+
+                <li><a class="btn btn-modif-back" href="{{ path('categories') }}">Gestion des catégories</a></li>
+
+                <li><a class="btn btn-modif-back" href="{{ path('gestion_commandes') }}">Liste des commandes</a></li>
+
+            </ul>
+        </nav>
+    </header>
+
+{% block body %}
+{% endblock %}
+
+
+{% block javascripts %}
+    <script type="text/javascript" src="{{ asset('assets/jquery-3.6.0.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('assets/popper.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('assets/bootstrap/js/bootstrap.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('assets/backoffice.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('assets/jquery.lazy.min.js') }}"></script>
+{% endblock %}
+</body>
+</html>
+
+

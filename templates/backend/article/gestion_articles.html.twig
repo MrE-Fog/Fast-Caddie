@@ -1,0 +1,174 @@
+{% extends 'backoffice.html.twig' %}
+
+{% block title %} {{ parent() }} | Gestion articles{% endblock %}
+
+{% block body %}
+
+    {% for message in app.flashes('success') %}
+        <div class="messageSuccess quitter">
+            {{ message }}
+        </div>
+    {% endfor %}
+
+    {% for message in app.flashes('echec') %}
+        <div class="messageEchec quitter">
+            {{ message }}
+        </div>
+    {% endfor %}
+
+    <div class="conteneur-global">
+        <div class="conteneur-secondaire d-flex justify-content-between align-items-center">
+            <h1>Gestion des articles</h1>
+            <a class="btn-back" href="{{ path('add_article') }}">Ajouter un article</a>
+        </div>
+
+        {# Trie des articles avec la catégorie, le type et le prix #}
+        <div class="conteneur-secondaire">
+            <form action="{{ path('filter_articles') }}"  method="get">
+                <label for="categorie">Catégorie</label>
+                <select aria-label="categorie" name="categorie" class="types" >
+                    <option value=""></option>
+                    {% for categorie in categories %}
+                        <option value="{{ categorie.id }}">{{ categorie.nom }}</option>
+                    {% endfor %}
+                </select>
+
+                <div id="divType" class="mt-2" style="display: none">
+                    <label for="type">Unité</label>
+                    <select aria-label="type" name="type" >
+                        <option value=""></option>
+                        <option value="kg">kg</option>
+                        <option value="100g">100g</option>
+                        <option value="500g">500g</option>
+                    </select>
+                </div>
+
+                <label for="prixInf">Prix Inférieur à</label>
+                <select aria-label="prixInf" name="prixInf">
+                    <option value=""></option>
+                    <option value="5">5€</option>
+                    <option value="10">10€</option>
+                    <option value="15">15€</option>
+                </select>
+
+                <button class="btn-back" type="submit">Trier</button>
+            </form>
+        </div>
+
+        <div class="conteneur-secondaire d-flex justify-content-around align-items-center">
+            <form action="{{ path('filter_articles') }}"  method="get">
+                <label>Rechercher
+                    <input required type="text" name="nomArticle">
+                </label>
+                <button class="btn-back" type="submit">Valider</button>
+            </form>
+        </div>
+
+        {# SI on a effectué une recherche avec la bar de recherche #}
+        {% if rechercheArticle is not null and introuvable == false %}
+            <div class="conteneur-secondaire d-flex flex-wrap">
+                {% for article in rechercheArticle %}
+                    <div class="card" style="width: 200px;">
+                        <a href="{{ path('show_article', {'id': article.id}) }}">
+                            <img class="lazy card-img-top p-1" style="width:100%" src="{{ asset('assets/images/loader.gif') }}" data-src="{{ asset('images/imagesUpload/') }}{{ article.image }}" alt="{{ article.nom }}" aria-label="Photo de {{ article.nom }}">
+                            <noscript>
+                                <img class="card-img-top p-1" style="width:100%" src="{{ asset('images/imagesUpload/') }}{{ article.image }}" alt="{{ article.nom }}" aria-label="Photo de {{ article.nom }}">
+                            </noscript>
+                        </a>
+                        <div class="card-body">
+                            <h4 class="card-title"><a class="text-decoration-none text-dark" href="{{ path('show_article', {'id': article.id}) }}">{{ article.nom }}</a></h4>
+                            <h6>{{ article.categorie.nom }}</h6>
+
+                            <hr>
+                            <p class="card-text">{{ article.description }}</p>
+                        </div>
+                        {% if article.type is not null %}
+                            <h3 class="text-center">{{ article.prix }} € / {{ article.type }}</h3>
+                        {% else %}
+                            <h3 class="text-center">{{ article.prix }} €</h3>
+                        {% endif %}
+
+                        <div class="card-footer d-flex justify-content-around align-items-center">
+                            <p>Stock: {{ article.stock }}</p>
+                            <a class="btn-modif-back" href="{{ path('article_modif' ,{'id':article.id}) }}"><i class="fas fa-edit text-primary"></i></a>
+                            <a class="btn-delete-back" href="{{ path('delete_article',{'id':article.id}) }}"><i class="fas fa-trash text-danger"></i></a>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        {# SI la recherche avec la bar n'as rien donné #}
+        {% elseif introuvable == true %}
+            <p class="text-danger">Aucun article n'as été trouvé</p>
+        </div>
+
+        {# SI on a effectué un tri #}
+        {% elseif articlesChoisi is not null and introuvables == false %}
+            <div class="conteneur-secondaire d-flex flex-wrap">
+                {% for article in articlesChoisi %}
+                    <div class="card" style="width: 200px;">
+                        <a href="{{ path('show_article', {'id': article.id}) }}">
+                            <img class="lazy card-img-top p-1" style="width:100%" src="{{ asset('assets/images/loader.gif') }}" data-src="{{ asset('images/imagesUpload/') }}{{ article.image }}" alt="{{ article.nom }}" aria-label="Photo de {{ article.nom }}">
+                            <noscript>
+                                <img class="card-img-top p-1" style="width:100%" src="{{ asset('images/imagesUpload/') }}{{ article.image }}" alt="{{ article.nom }}" aria-label="Photo de {{ article.nom }}">
+                            </noscript>
+                        </a>
+                        <div class="card-body">
+                            <h4 class="card-title"><a class="text-decoration-none text-dark" href="{{ path('show_article', {'id': article.id}) }}">{{ article.nom }}</a></h4>
+                            <h6>{{ article.categorie.nom }}</h6>
+
+                            <hr>
+                            <p class="card-text">{{ article.description }}</p>
+                        </div>
+                        {% if article.type is not null %}
+                            <h3 class="text-center">{{ article.prix }} € / {{ article.type }}</h3>
+                        {% else %}
+                            <h3 class="text-center">{{ article.prix }} €</h3>
+                        {% endif %}
+
+                        <div class="card-footer d-flex justify-content-around align-items-center">
+                            <p>Stock: {{ article.stock }}</p>
+                            <a class="btn-modif-back" href="{{ path('article_modif' ,{'id':article.id}) }}"><i class="fas fa-edit text-primary"></i></a>
+                            <a class="btn-delete-back" href="{{ path('delete_article',{'id':article.id}) }}"><i class="fas fa-trash text-danger"></i></a>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+            {# SI le trie n'as rien donné #}
+            {% elseif introuvables == true %}
+                <p class="text-danger">Aucun article n'as été trouvé</p>
+
+            {# SI aucune recherche n'as été effectué #}
+            {% elseif articlesChoisi is null and introuvable == false %}
+                <div class="conteneur-secondaire d-flex flex-wrap">
+                    {% for article in articles %}
+                        <div class="card" style="width: 200px;">
+                            <a href="{{ path('show_article', {'id': article.id}) }}">
+                                <img class="lazy card-img-top p-1" style="width:100%" src="{{ asset('assets/images/loader.gif') }}" data-src="{{ asset('images/imagesUpload/') }}{{ article.image }}" alt="{{ article.nom }}" aria-label="Photo de {{ article.nom }}">
+                                <noscript>
+                                    <img class="card-img-top p-1" style="width:100%" src="{{ asset('images/imagesUpload/') }}{{ article.image }}" alt="{{ article.nom }}" aria-label="Photo de {{ article.nom }}">
+                                </noscript>
+                            </a>
+                            <div class="card-body">
+                                <h4 class="card-title"><a class="text-decoration-none text-dark" href="{{ path('show_article', {'id': article.id}) }}">{{ article.nom }}</a></h4>
+                                <h6>{{ article.categorie.nom }}</h6>
+
+                                <hr>
+                                <p class="card-text">{{ article.description }}</p>
+                            </div>
+                            {% if article.type is not null %}
+                                <h3 class="text-center">{{ article.prix }} € / {{ article.type }}</h3>
+                            {% else %}
+                                <h3 class="text-center">{{ article.prix }} €</h3>
+                            {% endif %}
+
+                            <div class="card-footer d-flex justify-content-around align-items-center">
+                                <p>Stock: {{ article.stock }}</p>
+                                <a class="btn-modif-back" href="{{ path('article_modif' ,{'id':article.id}) }}"><i class="fas fa-edit text-primary"></i></a>
+                                <a class="btn-delete-back" href="{{ path('delete_article',{'id':article.id}) }}"><i class="fas fa-trash text-danger"></i></a>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+
+{% endblock %}

@@ -1,0 +1,91 @@
+{% extends 'backoffice.html.twig' %}
+
+
+{% block title %} {{ parent() }} | Categories{% endblock %}
+
+{% block body %}
+    {% for message in app.flashes('success') %}
+        <div class="messageSuccess quitter">
+            {{ message }}
+        </div>
+    {% endfor %}
+
+    {% for message in app.flashes('echec') %}
+        <div class="messageEchec quitter">
+            {{ message }}
+        </div>
+    {% endfor %}
+
+    <div class="conteneur-global">
+        <div class="conteneur-secondaire">
+            {% if ajout == true %}
+                <h1>Ajouter une catégorie</h1>
+            {% else %}
+                <h1>Modifier une catégorie</h1>
+            {% endif %}
+
+
+
+            {{ form_start(formCategorie) }}
+
+            <div class="d-flex align-items-center" >
+                <div class="m-3">
+                    <label>Nom</label>
+                </div>
+
+                <div style="width: 75%">{{ form_row(formCategorie.nom) }}</div>
+            </div>
+
+            <div class="mx-3">
+                {% if ajout == true %}
+                    <button class="btn-back" type="submit">Ajouter</button>
+                {% else %}
+                    <button class="btn-back" type="submit">Modifier</button>
+                {% endif %}
+            </div>
+            {{ form_end(formCategorie) }}
+        </div>
+
+        <div class="conteneur-secondaire">
+            <h2>Liste des catégories</h2>
+
+            <form action="{{ path('filter_categories') }}"  method="get">
+                <label>Rechercher
+                    <input required type="text" name="nomCategorie">
+                </label>
+                <button class="btn-back" type="submit">Valider</button>
+            </form>
+
+            {% if categorieChoisi is not null and categorieChoisi is not empty%}
+                <div class="conteneur-categorie">
+                    <div class="categorie bg-success">
+                        {{ categorieChoisi.0.nom }}
+                        <div>
+                            <a href="{{ path('edit_categorie', {'id': categorieChoisi.0.id}) }}">  <i class="fas fa-edit text-primary"></i></a>
+                            <a href="{{ path('delete_categorie', {'id': categorieChoisi.0.id}) }}">  <i class="fas fa-trash text-danger"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <hr>
+
+            {% elseif fail == true %}
+                <p class="text-danger">Aucune catégorie portant ce nom n'as été trouvé</p>
+            {% endif %}
+
+            <div class="conteneur-categorie">
+                {% for categorie in categories %}
+                    <div class="categorie">
+                        {{ categorie.nom }}
+                        <div>
+                            <a href="{{ path('edit_categorie', {'id': categorie.id}) }}">  <i class="fas fa-edit text-primary"></i></a>
+                            <a href="{{ path('delete_categorie', {'id': categorie.id}) }}">  <i class="fas fa-trash text-danger"></i></a>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+
+    </div>
+
+
+{% endblock %}

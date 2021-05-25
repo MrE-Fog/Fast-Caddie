@@ -1,0 +1,54 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} {{ parent() }} | Inscription{% endblock %}
+
+{% block body %}
+
+    {% for message in app.flashes('success') %}
+        <div class="messageSuccess quitter">
+            {{ message }}
+        </div>
+    {% endfor %}
+
+    {% for message in app.flashes('echec') %}
+        <div class="messageEchec quitter">
+            {{ message }}
+        </div>
+    {% endfor %}
+
+    {% if mode==true %}
+        <h1 class="text-center profil_h1">Inscription</h1>
+    {% else %}
+        <h1 class="text-center profil_h1">Modification profil</h1>
+    {% endif %}
+
+    <div class="container-fluid register_form">
+        <div class="box_register">
+            <div class="text-center">
+                <a href="{{ path('home') }}">
+                    <img alt="logo de fast caddie" id="logo_fastcaddie" src="{{ asset("assets/images/logoFastCaddie.png") }}">
+                </a>
+                <hr>
+                {{ form_start(form) }}
+                {{ form_errors(form) }}
+
+                {{ form_row(form.nom) }}
+                {{ form_row(form.prenom) }}
+                {{ form_row(form.username) }}
+                {{ form_row(form.email) }}
+                {{ form_row(form.password) }}
+                {{ form_row(form.confirm_password) }}
+
+                {{ form_end(form) }}
+                <hr>
+                <a class="btn btn-danger mb-3" href="{{ path('google_connect') }}">
+                    <i class="fab fa-google"></i> Google
+                </a>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+
+
+

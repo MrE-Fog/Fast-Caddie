@@ -1,0 +1,75 @@
+{% extends 'backoffice.html.twig' %}
+
+{% block title %} {{ parent() }} | Commandes {% endblock %}
+
+{% block body %}
+    {% for message in app.flashes('success') %}
+        <div class="messageSuccess quitter">
+            {{ message }}
+        </div>
+    {% endfor %}
+
+    {% for message in app.flashes('echec') %}
+        <div class="messageEchec quitter">
+            {{ message }}
+        </div>
+    {% endfor %}
+
+    <div class="conteneur-global">
+        <div class="conteneur-secondaire">
+            <h1>Liste des commandes</h1>
+        </div>
+
+        <div class="conteneur-secondaire">
+            <table class="table">
+                <tr>
+                    <th>#</th>
+                    <th>Utilisateur</th>
+                    <th>Produits</th>
+                    <th>Message de l'utilisateur</th>
+                    <th>Date</th>
+                    <th>Etat</th>
+                    <th>Livreur</th>
+                    <th>Total TTC</th>
+                    <th></th>
+                </tr>
+                {% for commande in commandes %}
+                <tr>
+
+                        <td>{{ commande.id }}</td>
+                        <td>
+                            <a class="text-decoration-none text-primary" href="{{ path('utilisateurs') }}#{{ commande.user.id }}">{{ commande.user.username }}</a>
+                        </td>
+
+                        <td>
+                            {% for produit in commande.achats %}
+                                <a class="text-decoration-none text-primary" href="{{ path('show_article', {'id': produit.article.id}) }}">{{ produit.article.nom }}</a>,
+                            {% endfor %}
+                        </td>
+
+                        {% if commande.message is not null %}
+                            <td>{{ commande.message }}
+                        {% else %}
+                            <td>Pas de message</td>
+                        {% endif %}
+
+                        <td>{{ commande.date.format("d/m/Y h:m") }}</td>
+                        <td>{{ commande.etat }}</td>
+
+                        {% if commande.livreur is not null %}
+                            <td><a class="text-decoration-none text-primary" href="{{ path('gestion_employe') }}#{{ commande.livreur.id }}">{{ commande.livreur }}</a></td>
+                        {% else %}
+                            <td>Livreur non attribué</td>
+                        {% endif %}
+
+                        <td>{{ commande.total }} €</td>
+                        <td><a href="{{ path('delete_commande', {'id': commande.id}) }}"><i style="color: red" class="fas fa-trash"></i></a></td>
+                </tr>
+                    {% endfor %}
+
+            </table>
+
+        </div>
+    </div>
+
+{% endblock %}

@@ -1,0 +1,44 @@
+{% extends 'backoffice.html.twig' %}
+
+
+{% block title %} {{ parent() }} | Ajout employé {% endblock %}
+
+{% block body %}
+
+    <div class="conteneur-global">
+        <div class="conteneur-secondaire">
+            <h1 class="text-center">Ajouter un employé</h1>
+
+            {{ form_start(formEmploye) }}
+
+            {{ form_errors(formEmploye) }}
+            {# form_errors() permet d'afficher les msg d'erreurs globales je le met en haut pour que ce soit joli#}
+
+            <div class="mb-3">
+                {{ form_row(formEmploye.nom) }}
+            </div>
+
+            <div class="mb-3">
+                {{ form_row(formEmploye.prenom) }}
+            </div>
+
+            <div class="mb-3">
+                {{ form_row(formEmploye.pseudo) }}
+            </div>
+
+            <div class="d-flex align-items-center justify-content-between">
+                {{ form_row(formEmploye.photo, { 'attr' : {"onChange" : "loadFile(event)"}}) }}
+                <button type="submit" class="btn-back"><i class="fas fa-plus"></i>  Ajouter</button>
+            </div>
+
+            <div class="col-md-12 text-center mt-2">
+                <img src="" alt="Photo de l'employé" id="image" style='width:500px'>
+            </div>
+
+            {{ form_end(formEmploye) }}
+        </div>
+
+
+    </div>
+
+{% endblock %}

@@ -1,0 +1,39 @@
+{% extends 'backoffice.html.twig' %}
+
+{% block title %} {{ parent() }} | Edition employé{% endblock %}
+
+{% block body %}
+
+    <div class="conteneur-global">
+        <h1 class="mt-3 text-center">Modifier un profil d'employé</h1>
+
+        {{ form_start(formEmploye) }}
+        {{ form_errors(formEmploye) }}
+
+        <div class="mb-3">
+            {{ form_row(formEmploye.nom) }}
+        </div>
+
+        <div class="mb-3">
+            {{ form_row(formEmploye.prenom) }}
+        </div>
+
+        <div class="mb-3">
+            {{ form_row(formEmploye.pseudo) }}
+        </div>
+
+        <div class="d-flex align-items-center justify-content-between">
+            {{ form_row(formEmploye.photoFile, { 'attr' : {"onChange" : "loadFile(event)"}}) }}
+
+            <button class="btn-back" type="submit">Modifier</button>
+        </div>
+
+        <div class="col-md-12 text-center mt-2">
+            <img id="image" src="{{ asset('images/imagesUpload/' ~ employe.photo) }}" style='width:200px' alt="Photo de {{ employe.nom }}">
+        </div>
+
+        {{ form_end(formEmploye) }}
+
+    </div>
+
+{% endblock %}

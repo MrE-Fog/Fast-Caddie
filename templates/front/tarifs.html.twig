@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+{% block title %} {{ parent() }} | Tarifs {% endblock %}
+
+{% block body %}
+    <hr>
+    <div class="container">
+        <h1>Prix Fast Caddie</h1>
+
+        <p>*Dans la mesure des livreurs disponibles.</p>
+        <p>Le prix de livraison varie aussi selon le prix total de la commande.</p>
+
+        <hr>
+
+        <img style="float: right; width: 350px; height: 350px" src="{{ asset('assets/images/tarifs_img.jpg') }}" alt="image de produits livrés">
+        <h4>Tarifs livraison</h4>
+        <ul style="margin-bottom: 270px">
+            <li>Gratuit si c'est votre première commande</li>
+            <li>Tarif général: 5,5€ pour toutes commandes inférieures à 80€</li>
+            <li>Gratuit si votre panier est supérieur à 80€</li>
+        </ul>
+
+    </div>
+
+{% endblock %}
+

@@ -1,0 +1,74 @@
+security:
+    #Cette ligne permet d'avoir plus de fonctionnalités en sécurité
+    # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
+    # ici on definit un encoder, on précise à symfony que nous allons utiliser l'algorithm bcrypt afin
+    # d'encoder un paramètre dans l'entité User et donc dans la BDD
+    encoders:
+        App\Entity\User:
+            algorithm: bcrypt
+            # encoder pour hasher le password
+
+    providers:
+        # les providers permettent de préciser à symfony où sont stockées les données à controller,
+        # in_database est utilisé pour avoir le principe de session à travers notre site.
+        in_database:
+            entity:
+                class: App\Entity\User
+                property: email
+    firewalls:
+        dev:
+            pattern: ^/(_(profiler|wdt)|css|images|js)/
+            security: false
+        main:
+            anonymous: true
+            lazy: true
+
+            # on précise à symfony d'activer la protection par rapport à notre provider indatabase à savoir
+            # en BDD sur la table User, sur le champs email
+            # Le guard gère la sécurité de l'authentification exemple: nombre d'essais
+            provider: in_database
+            guard:
+                entry_point: App\Security\AppAuthenticator
+                authenticators:
+                    - App\Security\AppAuthenticator
+                    - App\Security\GoogleAuthenticator
+
+            # on precise ici à symfony que la connexion va s'effectuer via un formulaire de connexion
+            form_login:
+                login_path: login #route pour se connecter
+                check_path: login #precision de la route sur laquelle il va effectuer les controles (email password)
+            logout:
+                path: logout # route sur laquelle symfony va éxécuter la déconnexion
+
+                target: home # route de redirection après déconnexion
+
+    role_hierarchy:
+        ROLE_ADMIN: ROLE_USER
+        ROLE_USER: IS_AUTHENTICATED_ANONYMOUSLY
+
+            # activate different ways to authenticate
+            # https://symfony.com/doc/current/security.html#firewalls-authentication
+
+            # https://symfony.com/doc/current/security/impersonating_user.html
+            # switch_user: true
+
+    # Easy way to control access for large sections of your site
+    # Note: Only the *first* access control that matches will be used
+    access_control:
+        - { path: ^/, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/show_articles, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/show, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/panier, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/ajoutpanier, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/retraitpanier, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/annulepanier, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/commande, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/searchrender, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/handle_search, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/admin, roles: ROLE_ADMIN }
+        - { path: ^/profil, roles: ROLE_USER }
+        - { path: ^/logout, roles: ROLE_USER }
+        - { path: ^/modifprofil, roles:  ROLE_USER }
+        - { path: ^/inscription, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/sendform, roles: ROLE_USER }

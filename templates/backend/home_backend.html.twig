@@ -1,0 +1,19 @@
+{% extends 'backoffice.html.twig' %}
+
+{% block title %} {{ parent() }} | Home{% endblock %}
+
+{% block body %}
+
+    <div class="conteneur-global">
+        <div class="conteneur-secondaire">
+            <h1>Bienvenue sur le backoffice de Fast caddie</h1>
+        </div>
+
+        <div class="conteneur-secondaire d-flex justify-content-center">
+            <img style="width: 300px" src="{{ asset('assets/images/logoFastCaddie.png') }}" alt="Logo Fast Caddie">
+        </div>
+
+    </div>
+
+
+{% endblock %}
